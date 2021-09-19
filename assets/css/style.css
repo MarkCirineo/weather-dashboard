@@ -5,7 +5,22 @@ input {
     padding-bottom: 5px;
 }
 
+main {
+    height: 90%;
+}
+
 .btn {
     width: 100%;
     margin-top: 12px;
+}
+
+.city-info-div {
+    border: 1px black solid;
+    margin: 10px 0;
+    padding: 5px;
+    height: 40%;
+}
+
+.forecast {
+    padding: 0 10px;
 }
