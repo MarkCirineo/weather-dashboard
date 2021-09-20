@@ -27,7 +27,13 @@ function makeButtons() {
         return;
     }
     pastCity = $("<button>")
-    pastCity.text(cityInput.val());
+    var cityName = cityInput.val();
+    var cityNameArr = cityName.split(" ");
+    for (let i = 0; i < cityNameArr.length; i++) {
+        cityNameArr[i] = cityNameArr[i].charAt(0).toUpperCase() + cityNameArr[i].substr(1);
+    }
+    cityName = cityNameArr.join(" ");
+    pastCity.text(cityName);
     pastCity.attr("id", cityInput.val().toLowerCase())
     pastCity.attr("class", "btn btn-secondary")
     pastSearches.append(pastCity);
