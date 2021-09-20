@@ -47,3 +47,19 @@ hr {
     line-height: 72px;
     font-size: 52px;
 }
+
+.forecast-date {
+    height: 30%;
+    margin: 0;   
+}
+
+.forecast-info {
+    height: 70%;
+    margin: 0;
+    padding-left: 0;
+}
+
+.forecast-info li {
+    padding-bottom: 35px;
+    font-size: 117%;
+}

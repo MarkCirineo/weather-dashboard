@@ -86,8 +86,7 @@ function displayWeather(data, city) {
     }
     city = cityArr.join(" ")
     displayCityName.text(city)
-    //TODO: display temp, wind speed, humidity, and uv index
-    // console.log(data);
+    //* displays current weather
     var currentTemp = data.current.temp;
     var currentWindSpeed = data.current.wind_speed;
     var currentHumidity = data.current.humidity;
@@ -96,6 +95,14 @@ function displayWeather(data, city) {
     displayCurrentWind.text("Wind: " + currentWindSpeed + " MPH");
     displayCurrentHumidity.text("Humidity: " + currentHumidity);
     displayCurrentUVI.text("UV Index: " + currentUVI + " %")
+    //*displays 5 day forecast
+    var dailyDataArr = data.daily;
+    for (let i = 1; i < 6; i++) {
+        var displayForecast = $("#"+i)
+        displayForecast.children().eq(0).text("Temp: " + dailyDataArr[i].temp.day + "°F")
+        displayForecast.children().eq(1).text("Wind: " + dailyDataArr[i].wind_speed + " MPH")
+        displayForecast.children().eq(2).text("Humidity: " + dailyDataArr[i].humidity + " %")  
+    }
 }
 
 function getPastSearches() {
