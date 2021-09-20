@@ -35,19 +35,33 @@ function makeButtons() {
     cityButton.on("click", getWeatherFromButton)
 }
 
+var data;
+var APIKey = "82bef0fd1f19abbff878e3a5939a1627"
+
 // //! API KEY: 82bef0fd1f19abbff878e3a5939a1627
 function getWeatherFromButton() {
     var city = pastCity.attr("id");
     console.log(city);
     
-    var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=82bef0fd1f19abbff878e3a5939a1627"
+    var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=" + APIKey
     fetch(url)
         .then(function (response) {
-            console.log(response)
             return response.json();
         })
             .then(function (data) {
-                console.log(data);
+                var lat = data.coord.lat;
+                var lon = data.coord.lon;
+                var newUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&units=imperial&appid=" + APIKey
+                fetch(newUrl)
+                    .then(function (newResponse) {
+                        return newResponse.json();
+                    })
+                        .then(function(newData) {
+                            displayWeather(newData);
+                        })
             })
 } 
 
+function displayWeather(data) {
+    console.log(data);
+}
