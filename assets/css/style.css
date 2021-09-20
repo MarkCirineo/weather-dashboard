@@ -9,9 +9,17 @@ main {
     height: 90%;
 }
 
+hr {
+    margin-bottom: 4px;
+}
+
 .btn {
     width: 100%;
     margin-top: 12px;
+}
+
+.past-searches {
+    padding-left: 0;
 }
 
 .city-info-div {
