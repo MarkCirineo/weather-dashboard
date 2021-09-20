@@ -32,3 +32,18 @@ hr {
 .forecast {
     padding: 0 10px;
 }
+
+.city-info-list {
+    list-style-type: none;
+}
+
+.city-info-list li {
+    padding-bottom: 14px;
+    font-size: 140%;
+    font-weight: 400;
+}
+
+.city-name {
+    line-height: 72px;
+    font-size: 52px;
+}

@@ -50,8 +50,8 @@ var data;
 var APIKey = "82bef0fd1f19abbff878e3a5939a1627"
 
 function getWeatherFromButton() {
-    var city = pastCity.attr("id");
-    
+    var city = $(this).attr("id");
+
     var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=" + APIKey
     fetch(url)
         .then(function (response) {
@@ -73,9 +73,13 @@ function getWeatherFromButton() {
 
 var displayCityName = $(".city-name");
 var displayCityInfo = $(".city-info-list");
+var displayCurrentTemp = $("#current-temp");
+var displayCurrentWind = $("#current-wind");
+var displayCurrentHumidity = $("#current-humidity");
+var displayCurrentUVI = $("#current-uvi");
+
 
 function displayWeather(data, city) {
-    // console.log(data);
     var cityArr = city.split(" ");
     for (let i = 0; i < cityArr.length; i++) {
         cityArr[i] = cityArr[i].charAt(0).toUpperCase() + cityArr[i].substr(1);
@@ -83,11 +87,16 @@ function displayWeather(data, city) {
     city = cityArr.join(" ")
     displayCityName.text(city)
     //TODO: display temp, wind speed, humidity, and uv index
+    // console.log(data);
+    var currentTemp = data.current.temp;
+    var currentWindSpeed = data.current.wind_speed;
+    var currentHumidity = data.current.humidity;
+    var currentUVI = data.current.uvi;
+    displayCurrentTemp.text("Temp: " + currentTemp + "°F");
+    displayCurrentWind.text("Wind: " + currentWindSpeed + " MPH");
+    displayCurrentHumidity.text("Humidity: " + currentHumidity);
+    displayCurrentUVI.text("UV Index: " + currentUVI + " %")
 }
-
-//TODO: create init function to display button on page load
-//? for loop for local storage with init function??
-//? probably change setItem to use an array in instead of individual
 
 function getPastSearches() {
     var getCities = localStorage.getItem("cities")
