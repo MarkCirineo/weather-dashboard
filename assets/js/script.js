@@ -127,11 +127,17 @@ function displayWeather(data, city) {
     displayCurrentUVI.text("UV Index: " + currentUVI + " %")
     //*displays 5 day forecast
     var dailyDataArr = data.daily;
+    console.log(dailyDataArr)
+
     for (let i = 1; i < 6; i++) {
-        var displayForecast = $("#"+i)
-        displayForecast.children().eq(0).text("Temp: " + dailyDataArr[i].temp.day + "°F")
-        displayForecast.children().eq(1).text("Wind: " + dailyDataArr[i].wind_speed + " MPH")
-        displayForecast.children().eq(2).text("Humidity: " + dailyDataArr[i].humidity + " %")  
+        var forecastTimeUnix = dailyDataArr[i].dt + data.timezone_offset;
+        var forecastDate = new Date(forecastTimeUnix*1000);
+        forecastDate = forecastDate.toLocaleDateString("en-US");
+        var displayForecast = $("#"+i);
+        displayForecast.siblings().text(forecastDate);
+        displayForecast.children().eq(0).text("Temp: " + dailyDataArr[i].temp.day + "°F");
+        displayForecast.children().eq(1).text("Wind: " + dailyDataArr[i].wind_speed + " MPH");
+        displayForecast.children().eq(2).text("Humidity: " + dailyDataArr[i].humidity + " %");
     }
 }
 
