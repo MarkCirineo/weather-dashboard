@@ -38,10 +38,8 @@ function makeButtons() {
 var data;
 var APIKey = "82bef0fd1f19abbff878e3a5939a1627"
 
-// //! API KEY: 82bef0fd1f19abbff878e3a5939a1627
 function getWeatherFromButton() {
     var city = pastCity.attr("id");
-    console.log(city);
     
     var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=" + APIKey
     fetch(url)
@@ -57,11 +55,20 @@ function getWeatherFromButton() {
                         return newResponse.json();
                     })
                         .then(function(newData) {
-                            displayWeather(newData);
+                            displayWeather(newData, city);
                         })
             })
 } 
 
-function displayWeather(data) {
-    console.log(data);
+var displayCityName = $(".city-name");
+var displayCityInfo = $(".city-info-list");
+
+function displayWeather(data, city) {
+    var cityArr = city.split(" ");
+    for (let i = 0; i < cityArr.length; i++) {
+        cityArr[i] = cityArr[i].charAt(0).toUpperCase() + cityArr[i].substr(1);
+    }
+    city = cityArr.join(" ")
+    displayCityName.text(city)
+    //TODO: display temp, wind speed, humidity, and uv index
 }
