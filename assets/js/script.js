@@ -5,6 +5,7 @@ var pastSearches = $(".past-searches");
 searchBtn.on("click", saveInput);
 cityInput.on("keydown", saveInputOnEnter);
 
+// loads past searches from local storage and adds them to the array used in saveInput() and saveInputOnEnter()
 var savedCities = [getPastSearches()];
 
 function saveInput() {
@@ -27,7 +28,7 @@ function saveInputOnEnter(e) {
 }
 
 var pastCity;
-
+//creates buttons showing previous searches
 function makeButtons() {
     if (pastSearches.children().text().toLowerCase().includes(cityInput.val().toLowerCase())) { 
         return;
@@ -48,9 +49,10 @@ function makeButtons() {
     cityButton.on("click", getWeatherFromButton)
 }
 
-var data;
+// var data;
 var APIKey = "82bef0fd1f19abbff878e3a5939a1627"
 
+//function run when using past search buttons
 function getWeatherFromButton() {
     var city = $(this).attr("id");
 
@@ -73,6 +75,7 @@ function getWeatherFromButton() {
             })
 } 
 
+// function run on initial input
 function getWeatherFromSearch(city) {
     var url = "https://api.openweathermap.org/data/2.5/weather?q=" + city +"&units=imperial&appid=" + APIKey
     fetch(url)
@@ -102,12 +105,17 @@ var displayCurrentUVI = $("#current-uvi");
 
 
 function displayWeather(data, city) {
+    console.log(data)
     var cityArr = city.split(" ");
     for (let i = 0; i < cityArr.length; i++) {
         cityArr[i] = cityArr[i].charAt(0).toUpperCase() + cityArr[i].substr(1);
     }
+    var currentTimeUnix = data.current.dt + data.timezone_offset;
+    console.log(currentTimeUnix)
+    var currentDate = new Date(currentTimeUnix*1000)
+    currentDate = currentDate.toLocaleDateString("en-US");
     city = cityArr.join(" ")
-    displayCityName.text(city)
+    displayCityName.text(city + " " + currentDate)
     //* displays current weather
     var currentTemp = data.current.temp;
     var currentWindSpeed = data.current.wind_speed;
@@ -127,6 +135,7 @@ function displayWeather(data, city) {
     }
 }
 
+// function to load past searches from local storage and display them
 function getPastSearches() {
     var getCities = localStorage.getItem("cities")
     if (getCities === null) {
