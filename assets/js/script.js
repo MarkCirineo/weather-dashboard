@@ -21,8 +21,13 @@ function saveInputOnEnter(e) {
 }
 
 function makeButtons() {
+    if (pastSearches.children().text().includes(cityInput.val())) { 
+        return;
+    }
     var pastCity = $("<button>")
     pastCity.text(cityInput.val());
+    pastCity.attr("id", cityInput.val().toLowerCase())
     pastCity.attr("class", "btn btn-secondary")
     pastSearches.append(pastCity);
 }
+
