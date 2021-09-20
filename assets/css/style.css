@@ -52,15 +52,24 @@ hr {
     height: 30%;
     margin: 0;
     line-height: 80px;
+    padding-left: 10px;
 }
 
 .forecast-info {
     height: 70%;
     margin: 0;
-    padding-left: 0;
+    padding-left: 10px;
 }
 
 .forecast-info li {
     padding-bottom: 35px;
     font-size: 117%;
+}
+
+.h-90 {
+    height: 90%;
+}
+
+.no-padding {
+    padding: 0;
 }
