@@ -5,8 +5,11 @@ var pastSearches = $(".past-searches");
 searchBtn.on("click", saveInput);
 cityInput.on("keydown", saveInputOnEnter);
 
+var savedCities = [getPastSearches()];
+
 function saveInput() {
-    localStorage.setItem(cityInput.val().toUpperCase(), cityInput.val())
+    savedCities.push(cityInput.val().toLowerCase().trim());
+    localStorage.setItem("cities", savedCities)
         makeButtons();
         cityInput.val("") 
 }
@@ -14,7 +17,8 @@ function saveInput() {
 function saveInputOnEnter(e) {
     var key = e.key;
     if (key === "Enter") {
-        localStorage.setItem(cityInput.val().toUpperCase(), cityInput.val())
+        savedCities.push(cityInput.val().toLowerCase().trim());
+        localStorage.setItem("cities", savedCities)
         makeButtons();
         cityInput.val("")
     }
@@ -23,9 +27,10 @@ function saveInputOnEnter(e) {
 var pastCity;
 
 function makeButtons() {
-    if (pastSearches.children().text().includes(cityInput.val())) { 
+    if (pastSearches.children().text().toLowerCase().includes(cityInput.val().toLowerCase())) { 
         return;
     }
+    //TODO: create conditional that checks the number of children to remove the last one and the new one
     pastCity = $("<button>")
     var cityName = cityInput.val();
     var cityNameArr = cityName.split(" ");
@@ -36,7 +41,7 @@ function makeButtons() {
     pastCity.text(cityName);
     pastCity.attr("id", cityInput.val().toLowerCase())
     pastCity.attr("class", "btn btn-secondary")
-    pastSearches.append(pastCity);
+    pastSearches.prepend(pastCity);
     var cityButton = $(pastCity)
     cityButton.on("click", getWeatherFromButton)
 }
@@ -70,6 +75,7 @@ var displayCityName = $(".city-name");
 var displayCityInfo = $(".city-info-list");
 
 function displayWeather(data, city) {
+    // console.log(data);
     var cityArr = city.split(" ");
     for (let i = 0; i < cityArr.length; i++) {
         cityArr[i] = cityArr[i].charAt(0).toUpperCase() + cityArr[i].substr(1);
@@ -77,4 +83,35 @@ function displayWeather(data, city) {
     city = cityArr.join(" ")
     displayCityName.text(city)
     //TODO: display temp, wind speed, humidity, and uv index
+}
+
+//TODO: create init function to display button on page load
+//? for loop for local storage with init function??
+//? probably change setItem to use an array in instead of individual
+
+function getPastSearches() {
+    var getCities = localStorage.getItem("cities")
+    if (getCities === null) {
+        return;
+    }
+    var citiesArr = getCities.split(",")
+    //todo: fix to get all words in city names capitalized (instead of just first)
+    for (let i = 0; i < citiesArr.length; i++) {
+        
+        citiesArr[i] = citiesArr[i].charAt(0).toUpperCase() + citiesArr[i].substr(1);
+        cityName = citiesArr.join(" ");
+        pastCity = $("<button>")
+        pastCity.text(citiesArr[i]);
+        pastCity.attr("id", citiesArr[i])
+        pastCity.attr("class", "btn btn-secondary")
+        pastSearches.prepend(pastCity);
+        var cityButton = $(pastCity)
+        cityButton.on("click", getWeatherFromButton)
+        if (citiesArr[i] === "") {
+            pastCity.remove();
+        }
+        var savedCities = [];
+        savedCities = localStorage.getItem("cities")
+    }
+    return savedCities;
 }
