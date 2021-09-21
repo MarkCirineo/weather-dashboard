@@ -32,8 +32,9 @@ var pastCity;
 function makeButtons() {
     if (pastSearches.children().text().toLowerCase().includes(cityInput.val().toLowerCase())) { 
         return;
+    } else if (pastSearches.children().length > 13) {
+        pastSearches.children().last().remove();
     }
-    //TODO: create conditional that checks the number of children to remove the last one and the new one
     pastCity = $("<button>")
     var cityName = cityInput.val();
     var cityNameArr = cityName.split(" ");
@@ -146,9 +147,7 @@ function getPastSearches() {
         return;
     }
     var citiesArr = getCities.split(",")
-    //todo: fix to get all words in city names capitalized (instead of just first)
     for (let i = 0; i < citiesArr.length; i++) {
-        
         citiesArr[i] = citiesArr[i].charAt(0).toUpperCase() + citiesArr[i].substr(1);
         cityName = citiesArr.join(" ");
         pastCity = $("<button>")
