@@ -36,7 +36,7 @@ function makeButtons() {
         pastSearches.children().last().remove();
     }
     pastCity = $("<button>")
-    var cityName = cityInput.val();
+    var cityName = cityInput.val().toLowerCase();
     var cityNameArr = cityName.split(" ");
     for (let i = 0; i < cityNameArr.length; i++) {
         cityNameArr[i] = cityNameArr[i].charAt(0).toUpperCase() + cityNameArr[i].substr(1);
@@ -124,7 +124,7 @@ function displayWeather(data, city) {
     displayCurrentWind.text("Wind: " + currentWindSpeed + " MPH");
     displayCurrentHumidity.text("Humidity: " + currentHumidity);
     displayCurrentUVI.text("UV Index: " + currentUVI + " %")
-    //todo: make the uv index colored
+
     //*displays 5 day forecast
     var dailyDataArr = data.daily;
 
