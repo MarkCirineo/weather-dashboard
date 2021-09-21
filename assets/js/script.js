@@ -1,5 +1,5 @@
 var cityInput = $("input");
-var searchBtn = $("button");
+var searchBtn = $(".search-button");
 var pastSearches = $(".past-searches");
 
 searchBtn.on("click", saveInput);
@@ -105,13 +105,11 @@ var displayCurrentUVI = $("#current-uvi");
 
 
 function displayWeather(data, city) {
-    console.log(data)
     var cityArr = city.split(" ");
     for (let i = 0; i < cityArr.length; i++) {
         cityArr[i] = cityArr[i].charAt(0).toUpperCase() + cityArr[i].substr(1);
     }
     var currentTimeUnix = data.current.dt + data.timezone_offset;
-    console.log(currentTimeUnix)
     var currentDate = new Date(currentTimeUnix*1000)
     currentDate = currentDate.toLocaleDateString("en-US");
     city = cityArr.join(" ")
@@ -125,9 +123,9 @@ function displayWeather(data, city) {
     displayCurrentWind.text("Wind: " + currentWindSpeed + " MPH");
     displayCurrentHumidity.text("Humidity: " + currentHumidity);
     displayCurrentUVI.text("UV Index: " + currentUVI + " %")
+    //todo: make the uv index colored
     //*displays 5 day forecast
     var dailyDataArr = data.daily;
-    console.log(dailyDataArr)
 
     for (let i = 1; i < 6; i++) {
         var forecastTimeUnix = dailyDataArr[i].dt + data.timezone_offset;
@@ -167,4 +165,11 @@ function getPastSearches() {
         savedCities = localStorage.getItem("cities")
     }
     return savedCities;
+}
+
+$(".clear-button").on("click", clearHistory)
+
+function clearHistory() {
+    localStorage.setItem("cities", "")
+    pastSearches.children().remove();
 }
